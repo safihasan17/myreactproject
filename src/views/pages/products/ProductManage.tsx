@@ -1,17 +1,42 @@
-function InvManage() {
+import { Link } from "react-router";
+import product1 from "../../../assets/images/product-1.png";
+import product2 from "../../../assets/images/product-2.png";
+import product3 from "../../../assets/images/product-3.png";
+import product4 from "../../../assets/images/product-4.png";
+import product5 from "../../../assets/images/product-5.png";
+import product6 from "../../../assets/images/product-6.png";
+import product7 from "../../../assets/images/product-7.png";
+import product8 from "../../../assets/images/product-8.png";
+import product9 from "../../../assets/images/product-9.png";
+import product10 from "../../../assets/images/product-10.png";
+
+export const products = [
+  product1,
+  product2,
+  product3,
+  product4,
+  product5,
+  product6,
+  product7,
+  product8,
+  product9,
+  product10,
+];
+
+function ProductManage() {
   return (
     <>
       <div className="row">
             <div className="col-12">
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <div className="">
-                  <h1 className="fs-3 mb-1">Inventory</h1>
-                  <p className="mb-0">Manage your product inventory</p>
+                  <h1 className="fs-3 mb-1">Products</h1>
+                  <p className="mb-0">Manage your product Products</p>
                 </div>
                 <div>
-                  <a href="create-product.html" className="btn btn-primary">
+                  <Link to="/Products-add" className="btn btn-primary">
                     Add Product
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -59,8 +84,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-1.png"
-                            alt=""
+                            src={product1} alt="Product" 
                             className="avatar avatar-md rounded"
                           />
                           <span className="ms-3">Gaming Joy Stick</span>
@@ -75,6 +99,9 @@ function InvManage() {
                       <td>150</td>
                       <td className="">
                         <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
+                        <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
                         <a href="#" className="link-danger">
@@ -86,7 +113,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-2.png"
+                            src={product2}
                             alt=""
                             className="avatar avatar-md rounded"
                           />
@@ -101,6 +128,9 @@ function InvManage() {
                       <td>320</td>
                       <td className="">
                         <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
+                        <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
                         <a href="#" className="link-danger">
@@ -112,7 +142,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-3.png"
+                            src={product3}
                             alt=""
                             className="avatar avatar-md rounded"
                           />
@@ -127,6 +157,9 @@ function InvManage() {
                       <td>200</td>
                       <td className="">
                         <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
+                        <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
                         <a href="#" className="link-danger">
@@ -138,7 +171,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-4.png"
+                            src={product4}
                             alt=""
                             className="avatar avatar-md rounded"
                           />
@@ -153,6 +186,9 @@ function InvManage() {
                       <td>80</td>
                       <td className="">
                         <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
+                        <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
                         <a href="#" className="link-danger">
@@ -164,7 +200,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-5.png"
+                            src={product5}
                             alt=""
                             className="avatar avatar-md rounded"
                           />
@@ -181,6 +217,9 @@ function InvManage() {
                       <td>110</td>
                       <td className="">
                         <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
+                        <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
                         <a href="#" className="link-danger">
@@ -192,7 +231,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-6.png"
+                            src={product6}
                             alt=""
                             className="avatar avatar-md rounded"
                           />
@@ -207,6 +246,9 @@ function InvManage() {
                       <td>10</td>
                       <td className="">
                         <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
+                        <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
                         <a href="#" className="link-danger">
@@ -218,7 +260,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-7.png"
+                            src={product7}
                             alt=""
                             className="avatar avatar-md rounded"
                           />
@@ -233,6 +275,9 @@ function InvManage() {
                       <td>10</td>
                       <td className="">
                         <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
+                        <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
                         <a href="#" className="link-danger">
@@ -244,7 +289,7 @@ function InvManage() {
                       <td>
                         <a href="">
                           <img
-                            src="./assets/images/product-8.png"
+                            src={product8}
                             alt=""
                             className="avatar avatar-md rounded"
                           />
@@ -258,6 +303,9 @@ function InvManage() {
                       <td>pcs</td>
                       <td>200</td>
                       <td className="">
+                        <a href="#" className="">
+                          <i className="bi bi-eye-fill"></i>
+                        </a>
                         <a href="#" className="">
                           <i className="ti ti-edit "></i>
                         </a>
@@ -316,4 +364,4 @@ function InvManage() {
   );
 }
 
-export default InvManage;
+export default ProductManage;

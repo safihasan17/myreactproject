@@ -1,4 +1,4 @@
-
+import { Link, NavLink } from "react-router";
 
 function Navbar(){
     return(
@@ -152,6 +152,12 @@ function Navbar(){
                     <a href="#!" className="">
                       <span> Account Settings</span>
                     </a>
+                    <li>
+                     <NavLink className="nav-link" to="/login">
+                       <i className="ti ti-logout"></i>
+                       <span className="nav-text">Log out</span>
+                     </NavLink>
+                    </li>
                   </div>
                 </div>
               </div>
