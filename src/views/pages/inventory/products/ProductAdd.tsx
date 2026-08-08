@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import  { type Product, defaultProduct } from "../../../interfaces/Product";
-import { useEffect, useState } from "react";
+import  { type Product, defaultProduct } from "../../../../interfaces/Product";
+import { useState } from "react";
 
 function ProductAdd() {
   const [product, setProduct] = useState<Product>(defaultProduct);

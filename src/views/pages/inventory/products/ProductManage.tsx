@@ -1,14 +1,14 @@
 import { Link } from "react-router";
-import product1 from "../../../assets/images/product-1.png";
-import product2 from "../../../assets/images/product-2.png";
-import product3 from "../../../assets/images/product-3.png";
-import product4 from "../../../assets/images/product-4.png";
-import product5 from "../../../assets/images/product-5.png";
-import product6 from "../../../assets/images/product-6.png";
-import product7 from "../../../assets/images/product-7.png";
-import product8 from "../../../assets/images/product-8.png";
-import product9 from "../../../assets/images/product-9.png";
-import product10 from "../../../assets/images/product-10.png";
+import product1 from "../../../../assets/images/product-1.png";
+import product2 from "../../../../assets/images/product-2.png";
+import product3 from "../../../../assets/images/product-3.png";
+import product4 from "../../../../assets/images/product-4.png";
+import product5 from "../../../../assets/images/product-5.png";
+import product6 from "../../../../assets/images/product-6.png";
+import product7 from "../../../../assets/images/product-7.png";
+import product8 from "../../../../assets/images/product-8.png";
+import product9 from "../../../../assets/images/product-9.png";
+import product10 from "../../../../assets/images/product-10.png";
 
 export const products = [
   product1,

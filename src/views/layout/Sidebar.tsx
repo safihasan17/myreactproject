@@ -28,14 +28,70 @@ function Sidebar(){
               <span className="nav-text">Dashboard</span>
             </NavLink>
           </li>
+
+          <li>
+            <NavLink className="nav-link" to="reports.html">
+              <i className="ti ti-receipt"></i>
+              <span className="nav-text">Reports</span>
+            </NavLink>
+          </li>
+          
+          <li className="px-4 py-2">
+             <small className="nav-text">Inventory</small>
+          </li>
+
+          <li>
+            <NavLink className="nav-link" to="/category">
+              <i className="ti ti-category-2"></i>
+              <span className="nav-text">Category</span>
+            </NavLink>
+          </li>
+
           <li>
             <NavLink className="nav-link" to="/products">
               <i className="ti ti-box-seam"></i>
               <span className="nav-text">products</span>
             </NavLink>
           </li>
-        
 
+          <li>
+            <NavLink className="nav-link" to="/product-varient">
+              <i className="ti ti-adjustments-horizontal"></i>
+              <span className="nav-text">Product Varients</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink className="nav-link" to="/inventory">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Inventory</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink className="nav-link" to="/stock-manage">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Stock Manage</span>
+            </NavLink>
+          </li>
+
+           
+
+          <li className="px-4 py-2">
+             <small className="nav-text">Customer</small>
+          </li>
+
+          <li>
+            <NavLink className="nav-link" to="/customer">
+              <i className="ti ti-address-book"></i>
+              <span className="nav-text">Customer</span>
+            </NavLink>
+          </li>
+          
+          
+          <li className="px-4 py-2">
+             <small className="nav-text">Users</small>
+          </li>
           <li>
             <NavLink className="nav-link" to="/user">
               <i className="ti ti-users"></i>
@@ -49,27 +105,7 @@ function Sidebar(){
             </NavLink>
           </li>
 
-          <li>
-            <NavLink className="nav-link" to="/customer">
-              <i className="ti ti-address-book"></i>
-              <span className="nav-text">Customer</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="nav-link" to="reports.html">
-              <i className="ti ti-receipt"></i>
-              <span className="nav-text">Reports</span>
-            </NavLink>
-          </li>
-          
-          <li>
-            <NavLink className="nav-link" to="docs.html">
-              <i className="ti ti-file-text"></i>
-              <span className="nav-text">Docs</span>
-            </NavLink>
-          </li>
-
-          <li className="px-4 pt-4 pb-2">
+          <li className="px-4  py-2">
             <small className="nav-text">Account</small>
           </li>
           <li>

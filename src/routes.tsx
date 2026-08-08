@@ -11,8 +11,16 @@ import RoleManage from "./views/pages/roles/RoleManage.tsx";
 import RoleAdd from "./views/pages/roles/RoleAdd.tsx";
 import CustomerManage from "./views/pages/customers/CustomerManage.tsx";
 import CustomerAdd from "./views/pages/customers/CustomerAdd.tsx";
-import ProductManage from "./views/pages/products/ProductManage.tsx";
-import ProductAdd from "./views/pages/products/ProductAdd.tsx";
+import ProductManage from "./views/pages/inventory/products/ProductManage.tsx";
+import ProductAdd from "./views/pages/inventory/products/ProductAdd.tsx";
+import CategoryManage from "./views/pages/inventory/category/CategoryaMange.tsx";
+import CategoryAdd from "./views/pages/inventory/category/CategoryAdd.tsx";
+import InvManage from "./views/pages/inventory/Inv/InvManage.tsx";
+import InvAdd from "./views/pages/inventory/Inv/InvAdd.tsx";
+import ProductVarientManage from "./views/pages/inventory/productVarient/PdtVarientManage.tsx";
+import PdtVarientAdd from "./views/pages/inventory/productVarient/PdtVarientAdd.tsx";
+import StockMgtManage from "./views/pages/inventory/stockmanage/StockMgtMange.tsx";
+import StockMgtAdd from "./views/pages/inventory/stockmanage/StockMgtAdd.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -60,10 +68,32 @@ export const routes = createBrowserRouter([
         element:<CustomerManage/>
       },
 
-       {
+      {
         path:"/add-customer",
         element:<CustomerAdd/>
       },
+
+      {
+        path:"/category",
+        element:<CategoryManage/>
+      },
+
+      {
+        path:"/add-category",
+        element:<CategoryAdd/>
+      },
+
+      {path:"/inventory",element:<InvManage/>},
+
+      {path:"/add-inventory", element:<InvAdd/>},
+
+      {path:"/product-varient",element:<ProductVarientManage/>},
+
+      {path:"/add-product-varient",element:<PdtVarientAdd/>},
+
+      {path:"/stock-manage",element:<StockMgtManage/>},
+      
+      {path:"/add-stock-manage",element:<StockMgtAdd/>},
 ]
   },
 
