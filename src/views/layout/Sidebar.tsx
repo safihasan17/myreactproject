@@ -30,11 +30,20 @@ function Sidebar(){
           </li>
 
           <li>
+            <NavLink className="nav-link" to="/pos">
+              <i className="ti ti-receipt"></i>
+              <span className="nav-text">Pos</span>
+            </NavLink>
+          </li>
+
+          <li>
             <NavLink className="nav-link" to="reports.html">
               <i className="ti ti-receipt"></i>
               <span className="nav-text">Reports</span>
             </NavLink>
           </li>
+
+
           
           <li className="px-4 py-2">
              <small className="nav-text">Inventory</small>

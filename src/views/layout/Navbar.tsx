@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import {  NavLink } from "react-router";
 
 function Navbar(){
     return(
@@ -115,7 +115,7 @@ function Navbar(){
                 aria-expanded="false"
               >
                 <img
-                  src="./assets/images/avatar-1.jpg"
+                  src="https://i.pravatar.cc/300"
                   alt=""
                   className="avatar avatar-sm rounded-circle"
                 />
@@ -127,7 +127,7 @@ function Navbar(){
                 <div>
                   <div className="d-flex gap-3 align-items-center border-dashed border-bottom px-3 py-3">
                     <img
-                      src="./assets/images/avatar-1.jpg"
+                      src="https://i.pravatar.cc/300"
                       alt=""
                       className="avatar avatar-md rounded-circle"
                     />

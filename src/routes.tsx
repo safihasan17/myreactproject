@@ -21,6 +21,7 @@ import ProductVarientManage from "./views/pages/inventory/productVarient/PdtVari
 import PdtVarientAdd from "./views/pages/inventory/productVarient/PdtVarientAdd.tsx";
 import StockMgtManage from "./views/pages/inventory/stockmanage/StockMgtMange.tsx";
 import StockMgtAdd from "./views/pages/inventory/stockmanage/StockMgtAdd.tsx";
+import PosManage from "./views/pages/pos/Pos.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -94,6 +95,8 @@ export const routes = createBrowserRouter([
       {path:"/stock-manage",element:<StockMgtManage/>},
       
       {path:"/add-stock-manage",element:<StockMgtAdd/>},
+
+      {path:"/pos",element:<PosManage/>},
 ]
   },
 
