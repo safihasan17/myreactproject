@@ -1,22 +1,25 @@
-export interface Product {
-  id?: number;
-  image: string;
+export type Product = {
+  id: number;
   name: string;
   code: string;
-  category: number;
-  brand: number;
+  category: string;
+  brand: string;
   price: number;
   unit: string;
   quantity: number;
+  image: string;
+  description: string;
 };
 
 export const defaultProduct: Product = {
+  id: 0,
+  name: "",
+  code: "",
+  category: "",
+  brand: "",
+  price: 0,
+  unit: "",
+  quantity: 0,
   image: "",
-  name: "Gaming Joy Stick",
-  code: "PRD001",
-  category: 0,
-  brand: 1,
-  price: 99.99,
-  unit: "pcs",
-  quantity: 150,
+  description: "",
 };

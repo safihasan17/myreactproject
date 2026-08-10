@@ -84,6 +84,50 @@ function Sidebar(){
             </NavLink>
           </li>
 
+          <li>
+            <NavLink className="nav-link" to="/branches">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Branch</span>
+            </NavLink>
+          </li>
+
+           <li>
+            <NavLink className="nav-link" to="/suppliers">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Suppliers</span>
+            </NavLink>
+          </li>
+
+           <li>
+            <NavLink className="nav-link" to="/purchase-orders">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Purchase </span>
+            </NavLink>
+          </li>
+
+
+           <li>
+            <NavLink className="nav-link" to="/order">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Order</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink className="nav-link" to="/order-items">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Order Item</span>
+            </NavLink>
+          </li>
+
+
+          <li>
+            <NavLink className="nav-link" to="/payments">
+              <i className="ti ti-clipboard-list"></i>
+              <span className="nav-text">Payments</span>
+            </NavLink>
+          </li>
+
            
 
           <li className="px-4 py-2">

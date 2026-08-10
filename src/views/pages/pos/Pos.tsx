@@ -140,44 +140,33 @@ const products: Product[] = [
   },
 ];
 
-const TAX_RATE = 0.05; // 5% — change as needed
+
 
 function PosManage() {
-  // cart = ekta list, jekhane add kora product gula thakbe
+  
   const [cart, setCart] = useState<CartItem[]>([]);
-
-  // search box e ja likhbe seta
   const [search, setSearch] = useState("");
-
-  // dropdown theke select kora category
   const [category, setCategory] = useState("All");
 
-  // ---------------------------------------------
-  // STEP 1: Category list toiri kora (dropdown er jonno)
-  // ---------------------------------------------
-  // Shohoj kore likhle: shob product ghure ghure category
-  // gula ekta notun list e rakhbo, duplicate thakle shudhu
-  // ekbar rakhbo.
+  
   const categoryList: string[] = ["All"];
   for (let i = 0; i < products.length; i++) {
     const cat = products[i].category;
     if (categoryList.indexOf(cat) === -1) {
-      // mane ei category ta list e age theke nai, tai add korlam
+      
       categoryList.push(cat);
     }
   }
 
-  // ---------------------------------------------
-  // STEP 2: Search + Category diye product filter kora
-  // ---------------------------------------------
+  
   const filteredProducts: Product[] = [];
   for (let i = 0; i < products.length; i++) {
     const p = products[i];
 
-    // category match kore kina check
+   
     const categoryOk = category === "All" || p.category === category;
 
-    // search text product er naam e ache kina check
+    
     const searchOk = p.name.toLowerCase().includes(search.toLowerCase());
 
     if (categoryOk && searchOk) {
@@ -185,11 +174,9 @@ function PosManage() {
     }
   }
 
-  // ---------------------------------------------
-  // STEP 3: Cart e product add kora
-  // ---------------------------------------------
+  
   function addToCart(product: Product) {
-    // Age check kori ei product cart e ase kina
+    
     let foundIndex = -1;
     for (let i = 0; i < cart.length; i++) {
       if (cart[i].id === product.id) {
@@ -199,29 +186,27 @@ function PosManage() {
     }
 
     if (foundIndex === -1) {
-      // Cart e nai, tai notun item hishebe add korbo (quantity = 1)
+      
       const newItem: CartItem = { ...product, qty: 1 };
       setCart([...cart, newItem]);
     } else {
-      // Cart e already ase, tai quantity 1 barabo (stock check shoho)
+      
       const existingItem = cart[foundIndex];
       if (existingItem.qty < existingItem.stock) {
         const newCart = [...cart];
         newCart[foundIndex] = { ...existingItem, qty: existingItem.qty + 1 };
         setCart(newCart);
       }
-      // stock shesh hole kichu hobe na
+      
     }
   }
 
-  // ---------------------------------------------
-  // STEP 4: Quantity barano / komano
-  // ---------------------------------------------
+  
   function increaseQty(id: string) {
     const newCart = [...cart];
     for (let i = 0; i < newCart.length; i++) {
       if (newCart[i].id === id) {
-        // stock er beshi barbe na
+        
         if (newCart[i].qty < newCart[i].stock) {
           newCart[i] = { ...newCart[i], qty: newCart[i].qty + 1 };
         }
@@ -234,7 +219,7 @@ function PosManage() {
     const newCart = [...cart];
     for (let i = 0; i < newCart.length; i++) {
       if (newCart[i].id === id) {
-        // 1 er niche jabe na
+        
         if (newCart[i].qty > 1) {
           newCart[i] = { ...newCart[i], qty: newCart[i].qty - 1 };
         }
@@ -243,9 +228,7 @@ function PosManage() {
     setCart(newCart);
   }
 
-  // ---------------------------------------------
-  // STEP 5: Item remove kora / cart clear kora
-  // ---------------------------------------------
+  
   function removeItem(id: string) {
     const newCart = [];
     for (let i = 0; i < cart.length; i++) {
@@ -260,9 +243,7 @@ function PosManage() {
     setCart([]);
   }
 
-  // ---------------------------------------------
-  // STEP 6: Total hisheb kora (for loop diye, reduce na)
-  // ---------------------------------------------
+ 
   let subtotal = 0;
   let itemCount = 0;
   for (let i = 0; i < cart.length; i++) {
@@ -270,27 +251,23 @@ function PosManage() {
     itemCount = itemCount + cart[i].qty;
   }
 
-  const taxRate = 0.05; // 5%
+  const taxRate = 0.05; 
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
 
-  // ---------------------------------------------
-  // STEP 7: Checkout
-  // ---------------------------------------------
+  
   function handleCheckout() {
     if (cart.length === 0) {
-      return; // cart khali thakle kichu korbo na
+      return; 
     }
     alert("Order placed!\nItems: " + itemCount + "\nTotal: $" + total.toFixed(2));
     clearCart();
   }
 
-  // ---------------------------------------------
-  // UI (screen e ja dekhabe)
-  // ---------------------------------------------
+ 
   return (
     <div className="row">
-      {/* Bam pashe: Product list */}
+      
       <div className="col-lg-8 mb-4 mb-lg-0">
         
         <h1 className="fs-3 mb-1">POS</h1>
@@ -298,7 +275,7 @@ function PosManage() {
 
         
         <div className="col-md-4">
-          {/* Search box */}
+         
           <input
           type="text"
           className="form-control mb-2"
@@ -321,10 +298,10 @@ function PosManage() {
           ))}
         </select>
          </div>
-        {/* Category dropdown */}
+       
        
 
-        {/* Product cards */}
+        
         <div className="row g-3">
           {filteredProducts.map((p) => (
             <div className="col-6 col-md-4 col-xl-3" key={p.id}>
@@ -353,7 +330,7 @@ function PosManage() {
         </div>
       </div>
 
-      {/* Dan pashe: Cart */}
+      
       <div className="col-lg-4">
         <div className="card">
           <div className="card-header d-flex justify-content-between">

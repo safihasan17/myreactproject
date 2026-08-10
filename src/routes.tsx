@@ -22,6 +22,18 @@ import PdtVarientAdd from "./views/pages/inventory/productVarient/PdtVarientAdd.
 import StockMgtManage from "./views/pages/inventory/stockmanage/StockMgtMange.tsx";
 import StockMgtAdd from "./views/pages/inventory/stockmanage/StockMgtAdd.tsx";
 import PosManage from "./views/pages/pos/Pos.tsx";
+import BranchManage from "./views/pages/inventory/branch/BranchManage.tsx";
+import BranchAdd from "./views/pages/inventory/branch/BranchAdd.tsx";
+import SupplierManage from "./views/pages/inventory/suppliers/SupplierManage.tsx";
+import SupplierAdd from "./views/pages/inventory/suppliers/SupplierAdd.tsx";
+import PurchaseOrderManage from "./views/pages/inventory/purchase/PurchaseOrderManage.tsx";
+import PurchaseOrderAdd from "./views/pages/inventory/purchase/PurchaseOrderAdd.tsx";
+import OrderManage from "./views/pages/inventory/order/OrderManage.tsx";
+import OrderAdd from "./views/pages/inventory/order/OrderAdd.tsx";
+import OrderItemManage from "./views/pages/inventory/orderItem/OrderItemManage.tsx";
+import OrderItemAdd from "./views/pages/inventory/orderItem/OrderItemAdd.tsx";
+import PaymentManage from "./views/pages/inventory/payment/PaymentManage.tsx";
+import PaymentAdd from "./views/pages/inventory/payment/PaymentAdd.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -97,6 +109,43 @@ export const routes = createBrowserRouter([
       {path:"/add-stock-manage",element:<StockMgtAdd/>},
 
       {path:"/pos",element:<PosManage/>},
+
+      {path:"/branches",element:<BranchManage/>},
+
+      {path:"/branches-add",element:<BranchAdd/>},
+
+
+
+      {path:"/suppliers",element:<SupplierManage/>},
+
+      {path:"/suppliers-add",element:<SupplierAdd/>},
+
+      
+
+      {path:"/purchase-orders",element:<PurchaseOrderManage/>},
+
+      {path:"/purchase-orders-add",element:<PurchaseOrderAdd/>},
+
+
+      {path:"/order",element:<OrderManage/>},
+       
+      {path:"/order-add",element:<OrderAdd/>},
+
+
+      {path:"/order-items",element:<OrderItemManage/>},
+
+      {path:"/order-items-add",element:<OrderItemAdd/>},
+
+
+      {path:"/payments",element:<PaymentManage/>},
+
+      {path:"/payments-add",element:<PaymentAdd/>},
+
+
+
+
+
+
 ]
   },
 
