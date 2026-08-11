@@ -26,7 +26,7 @@ interface CartItem extends Product {
   qty: number;
 }
 
-// ---- Product data (same as ProductManage.tsx) ----
+
 const products: Product[] = [
   {
     id: "PRD001",
@@ -260,7 +260,7 @@ function PosManage() {
     if (cart.length === 0) {
       return; 
     }
-    alert("Order placed!\nItems: " + itemCount + "\nTotal: $" + total.toFixed(2));
+    alert();
     clearCart();
   }
 

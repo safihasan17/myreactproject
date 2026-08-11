@@ -1,6 +1,69 @@
 import { Link } from "react-router";
+import { type User, defaultUser } from "../../../interfaces/User";
+import { useState } from "react";
 
 function UserAdd() {
+  const [user, setUser] = useState<User>(defaultUser);
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [error, setError] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    role: "",
+    password: "",
+    passwordConfirm: "",
+  });
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    let newErrors: any = {};
+
+    if (user.name === "") {
+      newErrors.name = "Name is required";
+    } else if (user.name.length > 100 || user.name.length < 3) {
+      newErrors.name = "Name more than 3 and not more than 100";
+    } else {
+      newErrors.name = "";
+    }
+
+    if (user.email === "") {
+      newErrors.email = "Email is required";
+    } else {
+      newErrors.email = "";
+    }
+
+    if (user.phone === "") {
+      newErrors.phone = "Phone is required";
+    } else {
+      newErrors.phone = "";
+    }
+
+    if (user.role === "") {
+      newErrors.role = "Role is required";
+    } else {
+      newErrors.role = "";
+    }
+
+    if (user.password === "") {
+      newErrors.password = "Password is required";
+    } else if (user.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    } else {
+      newErrors.password = "";
+    }
+
+    if (passwordConfirm === "") {
+      newErrors.passwordConfirm = "Please confirm the password";
+    } else if (passwordConfirm !== user.password) {
+      newErrors.passwordConfirm = "Passwords do not match";
+    } else {
+      newErrors.passwordConfirm = "";
+    }
+
+    setError(newErrors);
+    console.log(user);
+  }
+
   return (
     <>
       <div className="row">
@@ -33,8 +96,11 @@ function UserAdd() {
                       className="form-control"
                       id="userName"
                       placeholder="Enter full name"
-                      required
+                      
+                      value={user.name}
+                      onChange={(e) => setUser({ ...user, name: e.target.value })}
                     />
+                    <small className="text-danger">{error.name}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="userEmail" className="form-label">
@@ -45,8 +111,11 @@ function UserAdd() {
                       className="form-control"
                       id="userEmail"
                       placeholder="Enter email address"
-                      required
+                      
+                      value={user.email}
+                      onChange={(e) => setUser({ ...user, email: e.target.value })}
                     />
+                    <small className="text-danger">{error.email}</small>
                   </div>
                 </div>
                 <div className="row">
@@ -59,19 +128,29 @@ function UserAdd() {
                       className="form-control"
                       id="userPhone"
                       placeholder="e.g. +880 1XXX-XXXXXX"
-                      required
+                      
+                      value={user.phone}
+                      onChange={(e) => setUser({ ...user, phone: e.target.value })}
                     />
+                    <small className="text-danger">{error.phone}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="userRole" className="form-label">
                       Role
                     </label>
-                    <select className="form-select" id="userRole" required>
+                    <select
+                      className="form-select"
+                      id="userRole"
+                      
+                      value={user.role}
+                      onChange={(e) => setUser({ ...user, role: e.target.value as User["role"] })}
+                    >
                       <option value="">Select role</option>
                       <option value="admin">Admin</option>
                       <option value="manager">Manager</option>
                       <option value="cashier">Cashier</option>
                     </select>
+                    <small className="text-danger">{error.role}</small>
                   </div>
                 </div>
                 <div className="row">
@@ -84,9 +163,12 @@ function UserAdd() {
                       className="form-control"
                       id="userPassword"
                       placeholder="Enter password"
-                      required
+                      
                       minLength={6}
+                      value={user.password}
+                      onChange={(e) => setUser({ ...user, password: e.target.value })}
                     />
+                    <small className="text-danger">{error.password}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="userPasswordConfirm" className="form-label">
@@ -97,9 +179,12 @@ function UserAdd() {
                       className="form-control"
                       id="userPasswordConfirm"
                       placeholder="Re-enter password"
-                      required
+                      
                       minLength={6}
+                      value={passwordConfirm}
+                      onChange={(e) => setPasswordConfirm(e.target.value)}
                     />
+                    <small className="text-danger">{error.passwordConfirm}</small>
                   </div>
                 </div>
                 <div className="mb-3">
@@ -111,6 +196,9 @@ function UserAdd() {
                     className="form-control"
                     id="userAvatar"
                     accept="image/*"
+                    onChange={(e) =>
+                      setUser({ ...user, avatar: e.target.files?.[0]?.name ?? "" })
+                    }
                   />
                 </div>
                 <div className="mb-3">
@@ -122,7 +210,8 @@ function UserAdd() {
                       name="userStatus"
                       id="statusActive"
                       value="active"
-                      checked
+                      checked={user.status === "active"}
+                      onChange={() => setUser({ ...user, status: "active" })}
                     />
                     <label className="form-check-label" htmlFor="statusActive">
                       Active
@@ -135,17 +224,16 @@ function UserAdd() {
                       name="userStatus"
                       id="statusInactive"
                       value="inactive"
+                      checked={user.status === "inactive"}
+                      onChange={() => setUser({ ...user, status: "inactive" })}
                     />
-                    <label
-                      className="form-check-label"
-                      htmlFor="statusInactive"
-                    >
+                    <label className="form-check-label" htmlFor="statusInactive">
                       Inactive
                     </label>
                   </div>
                 </div>
                 <div className="d-flex gap-2">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                     Add User
                   </button>
                   <button type="reset" className="btn btn-secondary">

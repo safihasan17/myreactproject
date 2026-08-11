@@ -1,6 +1,29 @@
 import { Link } from "react-router";
+import { type Category, defaultCategory } from "../../../../interfaces/Category";
+import { useState } from "react";
 
 function CategoryAdd() {
+  const [category, setCategory] = useState<Category>(defaultCategory);
+  const [error, setError] = useState({
+    name: "",
+  });
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    let newErrors: any = {};
+
+    if (category.name === "") {
+      newErrors.name = "Category name is required";
+    } else if (category.name.length > 100 || category.name.length < 3) {
+      newErrors.name = "Category name is betwwen 4 to 100 characters";
+    } else {
+      newErrors.name = "";
+    }
+
+    setError(newErrors);
+    console.log(category);
+  }
+
   return (
     <>
       <div className="row">
@@ -33,22 +56,32 @@ function CategoryAdd() {
                       className="form-control"
                       id="categoryName"
                       placeholder="Enter category name"
-                      required
+                      
+                      value={category.name}
+                      onChange={(e) => setCategory({ ...category, name: e.target.value })}
                     />
+                    <small className="text-danger">{error.name}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="categoryParent" className="form-label">
                       Parent Category
                     </label>
-                    <select className="form-select" id="categoryParent">
-                      <option value="">None (Top level)</option>
-                      <option value="1">Electronics</option>
-                      <option value="4">Groceries</option>
+                    <select
+                      className="form-select"
+                      id="categoryParent"
+                      value={category.parent_id}
+                      onChange={(e) =>
+                        setCategory({ ...category, parent_id: Number(e.target.value) })
+                      }
+                    >
+                      <option value={0}>None (Top level)</option>
+                      <option value={1}>Electronics</option>
+                      <option value={4}>Groceries</option>
                     </select>
                   </div>
                 </div>
                 <div className="d-flex gap-2">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                     Add Category
                   </button>
                   <button type="reset" className="btn btn-secondary">

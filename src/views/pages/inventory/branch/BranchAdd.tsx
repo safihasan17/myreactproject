@@ -1,8 +1,41 @@
 import { Link } from "react-router";
+import { type Branch, defaultBranch } from "../../../../interfaces/Branch";
+import { useState } from "react";
 
 function BranchAdd() {
-  
-  
+  const [branch, setBranch] = useState<Branch>(defaultBranch);
+  const [error, setError] = useState({
+    name: "",
+    address: "",
+    phone: "",
+  });
+
+  function handleSubmit(e:any) {
+    e.preventDefault()
+    let newErrors: any = {};
+
+    if (branch.name === "") {
+      newErrors.name = "Name is required";
+    } else if (branch.name.length > 100 || branch.name.length < 3) {
+      newErrors.name = "Name is between  4 to 100 character";
+    } else {
+      newErrors.name = "";
+    }
+
+    if (branch.address === "") {
+      newErrors.address = "Address is required";
+    } else {
+      newErrors.address = "";
+    }
+
+    if (branch.phone === "") {
+      newErrors.phone = "Phone is required";
+    } else {
+      newErrors.phone = "";
+    }
+
+    setError(newErrors);
+  }
 
   return (
     <>
@@ -36,10 +69,11 @@ function BranchAdd() {
                       className="form-control"
                       id="branchName"
                       placeholder="Enter branch name"
-                      required
-                      
+                     
+                      value={branch.name}
+                      onChange={(e) => setBranch({ ...branch, name: e.target.value })}
                     />
-                    
+                    <small className="text-danger">{error.name}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="branchPhone" className="form-label">
@@ -50,10 +84,11 @@ function BranchAdd() {
                       className="form-control"
                       id="branchPhone"
                       placeholder="e.g. +880 1XXX-XXXXXX"
-                      required
                       
+                      value={branch.phone}
+                      onChange={(e) => setBranch({ ...branch, phone: e.target.value })}
                     />
-                    
+                    <small className="text-danger">{error.phone}</small>
                   </div>
                 </div>
                 <div className="mb-3">
@@ -65,13 +100,14 @@ function BranchAdd() {
                     id="branchAddress"
                     rows={3}
                     placeholder="Enter full address"
-                    required
                     
+                    value={branch.address}
+                    onChange={(e) => setBranch({ ...branch, address: e.target.value })}
                   ></textarea>
-                 
+                  <small className="text-danger">{error.address}</small>
                 </div>
                 <div className="d-flex gap-2">
-                  <button type="submit" className="btn btn-primary" >
+                  <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                     Add Branch
                   </button>
                   <button type="reset" className="btn btn-secondary">

@@ -1,6 +1,41 @@
 import { Link } from "react-router";
+import { type ProductVarient, defaultProductVarient } from "../../../../interfaces/ProductVarient";
+import { useState } from "react";
 
 function PdtVarientAdd() {
+  const [variant, setVariant] = useState<ProductVarient>(defaultProductVarient);
+  const [error, setError] = useState({
+    product_id: "",
+    variant_name: "",
+    sku: "",
+  });
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    let newErrors: any = {};
+
+    if (variant.product_id === 0) {
+      newErrors.product_id = "Product is required";
+    } else {
+      newErrors.product_id = "";
+    }
+
+    if (variant.variant_name === "") {
+      newErrors.variant_name = "Variant name is required";
+    } else {
+      newErrors.variant_name = "";
+    }
+
+    if (variant.sku === "") {
+      newErrors.sku = "SKU is required";
+    } else {
+      newErrors.sku = "";
+    }
+
+    setError(newErrors);
+    console.log(variant);
+  }
+
   return (
     <>
       <div className="row">
@@ -33,14 +68,19 @@ function PdtVarientAdd() {
                     <select
                       className="form-select"
                       id="variantProduct"
-                      required
+                      
+                      value={variant.product_id}
+                      onChange={(e) =>
+                        setVariant({ ...variant, product_id: Number(e.target.value) })
+                      }
                     >
-                      <option value="">Select product</option>
-                      <option value="1">Wireless Mouse</option>
-                      <option value="2">Samsung Galaxy A15</option>
-                      <option value="3">Basmati Rice 5kg</option>
-                      <option value="4">Cola Can 330ml</option>
+                      <option value={0}>Select product</option>
+                      <option value={1}>Wireless Mouse</option>
+                      <option value={2}>Samsung Galaxy A15</option>
+                      <option value={3}>Basmati Rice 5kg</option>
+                      <option value={4}>Cola Can 330ml</option>
                     </select>
+                    <small className="text-danger">{error.product_id}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="variantName" className="form-label">
@@ -51,8 +91,13 @@ function PdtVarientAdd() {
                       className="form-control"
                       id="variantName"
                       placeholder="e.g. Black, 128GB / Blue"
-                      required
+                      
+                      value={variant.variant_name}
+                      onChange={(e) =>
+                        setVariant({ ...variant, variant_name: e.target.value })
+                      }
                     />
+                    <small className="text-danger">{error.variant_name}</small>
                   </div>
                 </div>
                 <div className="row">
@@ -65,8 +110,11 @@ function PdtVarientAdd() {
                       className="form-control"
                       id="variantSku"
                       placeholder="e.g. SKU-10001-BLK"
-                      required
+                      
+                      value={variant.sku}
+                      onChange={(e) => setVariant({ ...variant, sku: e.target.value })}
                     />
+                    <small className="text-danger">{error.sku}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label
@@ -81,7 +129,10 @@ function PdtVarientAdd() {
                       id="variantPriceAdjustment"
                       placeholder="0.00"
                       step="0.01"
-                      value="0"
+                      value={variant.price_adjustment}
+                      onChange={(e) =>
+                        setVariant({ ...variant, price_adjustment: Number(e.target.value) })
+                      }
                     />
                     <small className="text-secondary">
                       Use a negative number for a discount, positive for a
@@ -90,7 +141,7 @@ function PdtVarientAdd() {
                   </div>
                 </div>
                 <div className="d-flex gap-2">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                     Add Variant
                   </button>
                   <button type="reset" className="btn btn-secondary">

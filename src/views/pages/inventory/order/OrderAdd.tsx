@@ -53,7 +53,7 @@ function OrderAdd() {
               <p className="mb-0">Create a new sales order</p>
             </div>
             <div>
-              <Link to="/orders" className="btn btn-primary">
+              <Link to="/order" className="btn btn-primary">
                 Go to Orders List
               </Link>
             </div>

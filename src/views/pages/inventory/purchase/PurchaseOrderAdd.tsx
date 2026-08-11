@@ -11,7 +11,8 @@ function PurchaseOrderAdd() {
     total: "",
   });
 
-  function handleSubmit() {
+  function handleSubmit(e:any) {
+    e.preventDefault()
     let newErrors: any = {};
 
     if (purchaseOrder.supplier_id === 0) {
@@ -113,7 +114,7 @@ function PurchaseOrderAdd() {
                     <select
                       className="form-select"
                       id="poStatus"
-                      required
+                      
                       value={purchaseOrder.status}
                       onChange={(e) =>
                         setPurchaseOrder({ ...purchaseOrder, status: e.target.value as PurchaseOrder["status"] })
