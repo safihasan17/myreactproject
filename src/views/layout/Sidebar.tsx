@@ -1,10 +1,9 @@
-import { NavLink } from "react-router"
+import { NavLink } from "react-router";
 
-function Sidebar(){
-    return(
-      <>
-          
-           <aside id="sidebar" className="sidebar">
+function Sidebar() {
+  return (
+    <>
+      <aside id="sidebar" className="sidebar">
         <div className="logo-area">
           <NavLink to="/" className="d-inline-flex">
             <img
@@ -43,95 +42,108 @@ function Sidebar(){
             </NavLink>
           </li>
 
+          <li className="py-2">
+            <a
+              href="#inventoryCollapse"
+              data-bs-toggle="collapse"
+              role="button"
+              aria-expanded="true"
+              aria-controls="inventoryCollapse"
+              className="nav-link d-flex align-items-center justify-content-between"
+            >
+              <span>
+                <span className="nav-text">Inventory</span>
+              </span>
+              <i className="ti ti-chevron-down"></i>
+            </a>
 
-          
+            <div className="collapse show" id="inventoryCollapse">
+              <ul
+                className="nav flex-column ps-3"
+                style={{ listStyle: "none", padding: 0, margin: 0 }}
+              >
+                <li>
+                  <NavLink className="nav-link" to="/category">
+                    <i className="ti ti-category-2"></i>
+                    <span className="nav-text">Category</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/products">
+                    <i className="ti ti-box-seam"></i>
+                    <span className="nav-text">products</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/product-varient">
+                    <i className="ti ti-adjustments-horizontal"></i>
+                    <span className="nav-text">Product Varients</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/inventory">
+                    <i className="ti ti-clipboard-list"></i>
+                    <span className="nav-text">Inventory</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/stock-manage">
+                    <i className="bi-arrow-repeat"></i>
+                    <span className="nav-text">Stock Manage</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/branches">
+                    <i className="bi-shop"></i>
+                    <span className="nav-text">Branch</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/suppliers">
+                    <i className="bi-truck"></i>
+                    <span className="nav-text">Suppliers</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/purchase-orders">
+                    <i className="bi-cart-plus"></i>
+                    <span className="nav-text">Purchase </span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/order">
+                    <i className="bi-bag-check"></i>
+                    <span className="nav-text">Order</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/order-items">
+                    <i className="bi-list-check"></i>
+                    <span className="nav-text">Order Item</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink className="nav-link" to="/payments">
+                    <i className="bi-credit-card"></i>
+                    <span className="nav-text">Payments</span>
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </li>
+
           <li className="px-4 py-2">
-             <small className="nav-text">Inventory</small>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/category">
-              <i className="ti ti-category-2"></i>
-              <span className="nav-text">Category</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/products">
-              <i className="ti ti-box-seam"></i>
-              <span className="nav-text">products</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/product-varient">
-              <i className="ti ti-adjustments-horizontal"></i>
-              <span className="nav-text">Product Varients</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/inventory">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Inventory</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/stock-manage">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Stock Manage</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/branches">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Branch</span>
-            </NavLink>
-          </li>
-
-           <li>
-            <NavLink className="nav-link" to="/suppliers">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Suppliers</span>
-            </NavLink>
-          </li>
-
-           <li>
-            <NavLink className="nav-link" to="/purchase-orders">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Purchase </span>
-            </NavLink>
-          </li>
-
-
-           <li>
-            <NavLink className="nav-link" to="/order">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Order</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink className="nav-link" to="/order-items">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Order Item</span>
-            </NavLink>
-          </li>
-
-
-          <li>
-            <NavLink className="nav-link" to="/payments">
-              <i className="ti ti-clipboard-list"></i>
-              <span className="nav-text">Payments</span>
-            </NavLink>
-          </li>
-
-           
-
-          <li className="px-4 py-2">
-             <small className="nav-text">Customer</small>
+            <small className="nav-text">Customer</small>
           </li>
 
           <li>
@@ -140,10 +152,9 @@ function Sidebar(){
               <span className="nav-text">Customer</span>
             </NavLink>
           </li>
-          
-          
+
           <li className="px-4 py-2">
-             <small className="nav-text">Users</small>
+            <small className="nav-text">Users</small>
           </li>
           <li>
             <NavLink className="nav-link" to="/user">
@@ -175,9 +186,8 @@ function Sidebar(){
           </li>
         </ul>
       </aside>
-
-      </>
-    )
+    </>
+  );
 }
 
-export default Sidebar
+export default Sidebar;

@@ -34,6 +34,8 @@ import OrderItemManage from "./views/pages/inventory/orderItem/OrderItemManage.t
 import OrderItemAdd from "./views/pages/inventory/orderItem/OrderItemAdd.tsx";
 import PaymentManage from "./views/pages/inventory/payment/PaymentManage.tsx";
 import PaymentAdd from "./views/pages/inventory/payment/PaymentAdd.tsx";
+import UserDetails from "./views/pages/users/UserDetails.tsx";
+import UserEdit from "./views/pages/users/UserEdit.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -60,11 +62,21 @@ export const routes = createBrowserRouter([
         path:"/user",
         element:<UserManage/>
       },
+      {
+        path:"/user-details/:id",
+        element:<UserDetails/>
+      },
+
+      {
+        path:"/edit-user/:id",
+        element:<UserEdit/>
+      },
 
       {
         path:"/add-user",
         element:<UserAdd/>
       },
+
 
       {
         path:"/role",

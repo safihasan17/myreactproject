@@ -1,10 +1,9 @@
-import {  NavLink } from "react-router";
+import { NavLink } from "react-router";
 
-function Navbar(){
-    return(
-      <>
-          
-           <nav
+function Navbar() {
+  return (
+    <>
+      <nav
         id="topbar"
         className="navbar bg-white border-bottom fixed-top topbar px-3"
       >
@@ -153,10 +152,10 @@ function Navbar(){
                       <span> Account Settings</span>
                     </a>
                     <li>
-                     <NavLink className="nav-link" to="/login">
-                       <i className="ti ti-logout"></i>
-                       <span className="nav-text">Log out</span>
-                     </NavLink>
+                      <NavLink className="nav-link" to="/login">
+                        <i className="ti ti-logout"></i>
+                        <span className="nav-text">Log out</span>
+                      </NavLink>
                     </li>
                   </div>
                 </div>
@@ -164,10 +163,9 @@ function Navbar(){
             </li>
           </ul>
         </div>
-     </nav>
-
-      </>
-    )
+      </nav>
+    </>
+  );
 }
 
-export default Navbar
+export default Navbar;
