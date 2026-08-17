@@ -16,15 +16,15 @@ function UserAdd() {
     passwordConfirm: "",
   });
 
-  // const [roles, setRoles] = useState<Role[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
 
 
-  // function getRoles(){
-  //   api
-  //   .get("roles")
-  //   .then()
-  //   .catch()
-  // }
+  function getRoles(){
+    api
+    .get("roles")
+    .then()
+    .catch()
+  }
 
 
 
