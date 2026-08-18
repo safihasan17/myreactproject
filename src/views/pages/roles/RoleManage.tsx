@@ -48,7 +48,6 @@ function RoleManage() {
                   <th>ID</th>
                   <th>Role Name</th>
                   <th>Description</th>
-                  <th>Users Assigned</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -61,7 +60,7 @@ function RoleManage() {
                     </span>
                   </td>
                   <td>Full access to all modules, settings and reports</td>
-                  <td>1</td>
+                  
                   <td className="">
                     <a href="edit-role.html" className="">
                       <i className="ti ti-edit "></i>
@@ -79,7 +78,7 @@ function RoleManage() {
                     </span>
                   </td>
                   <td>Can manage inventory, view reports and manage staff</td>
-                  <td>2</td>
+                 
                   <td className="">
                     <a href="edit-role.html" className="">
                       <i className="ti ti-edit "></i>
@@ -97,7 +96,7 @@ function RoleManage() {
                     </span>
                   </td>
                   <td>Can process sales, orders and payments only</td>
-                  <td>2</td>
+                  
                   <td className="">
                     <a href="edit-role.html" className="">
                       <i className="ti ti-edit "></i>

@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 import { type User, defaultUser } from "../../../interfaces/User";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Role } from "../../../interfaces/Role";
-import { api } from "../../../config";
+import { api } from "../../../Config";
 
 function UserAdd() {
   const [user, setUser] = useState<User>(defaultUser);
@@ -17,16 +17,24 @@ function UserAdd() {
   });
 
   const [roles, setRoles] = useState<Role[]>([]);
+  const [msg, setMsg] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-
-  function getRoles(){
+  function getRoles() {
     api
-    .get("roles")
-    .then()
-    .catch()
+      .get("roles")
+      .then((res) => {
+        console.log(res.data);
+        setRoles(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-
+  useEffect(() => {
+    getRoles();
+  }, []);
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -75,7 +83,34 @@ function UserAdd() {
     }
 
     setError(newErrors);
-    console.log(user);
+    // console.log(user);
+
+    if (
+      newErrors.name == "" &&
+      newErrors.email == "" &&
+      newErrors.phone == "" &&
+      newErrors.role == "" &&
+      newErrors.password == "" &&
+      newErrors.passwordConfirm == ""
+    ) {
+      console.log(user);
+
+      api
+        .post("user-create",user )
+        .then((res) => {
+          console.log(res.data);
+          if (res.status == 200 || res.status == 201) {
+            setMsg(true);
+            setSuccess(true);
+            setUser(defaultUser);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setMsg(true);
+          setSuccess(false);
+        });
+    }
   }
 
   return (
@@ -99,6 +134,24 @@ function UserAdd() {
         <div className="col-12">
           <div className="card">
             <div className="card-body p-4">
+              {msg && (
+                <div
+                  className={`alert alert-${success ? "success" : "danger"} alert-dismissible fade show mb-3`}
+                  role="alert"
+                >
+                  {success
+                    ? "Data saved successfully"
+                    : "something went wrong! please try again after some time."}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => setMsg(false)}
+                  ></button>
+                </div>
+              )}
+
               <form id="addUserForm">
                 <div className="row">
                   <div className="col-md-6 mb-3">
@@ -110,9 +163,10 @@ function UserAdd() {
                       className="form-control"
                       id="userName"
                       placeholder="Enter full name"
-                      
                       value={user.name}
-                      onChange={(e) => setUser({ ...user, name: e.target.value })}
+                      onChange={(e) =>
+                        setUser({ ...user, name: e.target.value })
+                      }
                     />
                     <small className="text-danger">{error.name}</small>
                   </div>
@@ -125,9 +179,10 @@ function UserAdd() {
                       className="form-control"
                       id="userEmail"
                       placeholder="Enter email address"
-                      
                       value={user.email}
-                      onChange={(e) => setUser({ ...user, email: e.target.value })}
+                      onChange={(e) =>
+                        setUser({ ...user, email: e.target.value })
+                      }
                     />
                     <small className="text-danger">{error.email}</small>
                   </div>
@@ -142,9 +197,10 @@ function UserAdd() {
                       className="form-control"
                       id="userPhone"
                       placeholder="e.g. +880 1XXX-XXXXXX"
-                      
                       value={user.phone}
-                      onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                      onChange={(e) =>
+                        setUser({ ...user, phone: e.target.value })
+                      }
                     />
                     <small className="text-danger">{error.phone}</small>
                   </div>
@@ -155,14 +211,22 @@ function UserAdd() {
                     <select
                       className="form-select"
                       id="userRole"
-                      
                       value={user.role}
-                      onChange={(e) => setUser({ ...user, role: e.target.value as User["role"] })}
+                      onChange={(e) =>
+                        setUser({
+                          ...user,
+                          role: e.target.value as User["role"],
+                        })
+                      }
                     >
-                      <option value="">Select role</option>
-                      <option value="admin">Admin</option>
-                      <option value="manager">Manager</option>
-                      <option value="cashier">Cashier</option>
+                      <option value={0} disabled>
+                        Select role
+                      </option>
+                      {roles.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
                     </select>
                     <small className="text-danger">{error.role}</small>
                   </div>
@@ -177,10 +241,11 @@ function UserAdd() {
                       className="form-control"
                       id="userPassword"
                       placeholder="Enter password"
-                      
                       minLength={6}
                       value={user.password}
-                      onChange={(e) => setUser({ ...user, password: e.target.value })}
+                      onChange={(e) =>
+                        setUser({ ...user, password: e.target.value })
+                      }
                     />
                     <small className="text-danger">{error.password}</small>
                   </div>
@@ -193,12 +258,13 @@ function UserAdd() {
                       className="form-control"
                       id="userPasswordConfirm"
                       placeholder="Re-enter password"
-                      
                       minLength={6}
                       value={passwordConfirm}
                       onChange={(e) => setPasswordConfirm(e.target.value)}
                     />
-                    <small className="text-danger">{error.passwordConfirm}</small>
+                    <small className="text-danger">
+                      {error.passwordConfirm}
+                    </small>
                   </div>
                 </div>
                 <div className="mb-3">
@@ -211,7 +277,10 @@ function UserAdd() {
                     id="userAvatar"
                     accept="image/*"
                     onChange={(e) =>
-                      setUser({ ...user, avatar: e.target.files?.[0]?.name ?? "" })
+                      setUser({
+                        ...user,
+                        avatar: e.target.files?.[0]?.name ?? "",
+                      })
                     }
                   />
                 </div>
@@ -241,13 +310,20 @@ function UserAdd() {
                       checked={user.status === "inactive"}
                       onChange={() => setUser({ ...user, status: "inactive" })}
                     />
-                    <label className="form-check-label" htmlFor="statusInactive">
+                    <label
+                      className="form-check-label"
+                      htmlFor="statusInactive"
+                    >
                       Inactive
                     </label>
                   </div>
                 </div>
                 <div className="d-flex gap-2">
-                  <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={handleSubmit}
+                  >
                     Add User
                   </button>
                   <button type="reset" className="btn btn-secondary">
