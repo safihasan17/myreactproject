@@ -24,7 +24,7 @@ function UserAdd() {
     api
       .get("roles")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setRoles(res.data);
       })
       .catch((err) => {
@@ -60,10 +60,10 @@ function UserAdd() {
       newErrors.phone = "";
     }
 
-    if (user.role === "") {
+    if (user.role_id == 0) {
       newErrors.role = "Role is required";
     } else {
-      newErrors.role = "";
+      newErrors.role = 0;
     }
 
     if (user.password === "") {
@@ -98,7 +98,7 @@ function UserAdd() {
       api
         .post("user-create",user )
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.status == 200 || res.status == 201) {
             setMsg(true);
             setSuccess(true);
@@ -211,11 +211,11 @@ function UserAdd() {
                     <select
                       className="form-select"
                       id="userRole"
-                      value={user.role}
+                      value={user.role_id}
                       onChange={(e) =>
                         setUser({
                           ...user,
-                          role: e.target.value as User["role"],
+                          role_id: Number(e.target.value),
                         })
                       }
                     >
