@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { defaultUser, type User } from "../../../interfaces/User";
-import { api } from "../../../config";
+import { api } from "../../../Config";
 
 function UserDetails() {
   const {id} = useParams();

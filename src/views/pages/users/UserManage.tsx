@@ -107,7 +107,7 @@ function UserManage() {
                     <Link to={`/user-details/${item.id}`} className="">
                       <i className="bi bi-eye-fill"></i>
                     </Link>
-                    <Link to="/edit-user" className="">
+                    <Link to={`/edit-user/${item.id}`} className="">
                       <i className="ti ti-edit "></i>
                     </Link>
                     <a href="#" className="link-danger">

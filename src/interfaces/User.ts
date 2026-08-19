@@ -3,7 +3,7 @@ export type User = {
   name: string;
   email: string;
   phone: string;
-  role_id: number;
+  role: number;
   password: string;
   avatar: string;
   status: "active" | "inactive";
@@ -14,7 +14,7 @@ export const defaultUser: User = {
   name: "",
   email: "",
   phone: "",
-  role_id: 0,
+  role: 0,
   password: "",
   avatar: "",
   status: "active",

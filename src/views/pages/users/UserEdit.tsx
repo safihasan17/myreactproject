@@ -1,26 +1,57 @@
-import { Link } from "react-router";
-import { type User } from "../../../interfaces/User";
-import { useState } from "react";
+import { Link, useParams } from "react-router";
+import { type User, defaultUser } from "../../../interfaces/User";
+import { useEffect, useState } from "react";
+import type { Role } from "../../../interfaces/Role";
+import { api } from "../../../Config";
+
 
 function UserEdit() {
-  
-  const [user, setUser] = useState<User>({
-    id: 1,
-    name: "Shrina Tesla",
-    email: "shrina@example.com",
-    phone: "+880 1711-100001",
-    role: "admin",
-    password: "",
-    avatar: "",
-    status: "active",
-  });
-
+  const {id} = useParams();
+  const [user, setUser] = useState<User>(defaultUser);
+ 
   const [error, setError] = useState({
     name: "",
     email: "",
     phone: "",
     role: "",
+    
   });
+
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [msg, setMsg] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  function getUsers() {
+    api
+      .get("user-details?id=" + id)
+      .then((res) => {
+        // console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+    function getRoles(){
+    api
+    .get("roles")
+    .then((res)=>{
+      console.log(res.data);
+      setRoles(res.data);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  }
+
+  useEffect(()=>{
+    getRoles();
+  }, []);
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -46,14 +77,44 @@ function UserEdit() {
       newErrors.phone = "";
     }
 
-    if (user.role === "") {
+    if (user.role == 0) {
       newErrors.role = "Role is required";
     } else {
-      newErrors.role = "";
+      newErrors.role = 0;
     }
 
+  
+
+    
+
     setError(newErrors);
-    console.log(user);
+    // console.log(user);
+
+    if (
+      newErrors.name == "" &&
+      newErrors.email == "" &&
+      newErrors.phone == "" &&
+      newErrors.role == "" 
+     
+    ) {
+      console.log(user);
+
+      api
+        .post("user-update",user )
+        .then((res) => {
+          // console.log(res.data);
+          if (res.status == 200 || res.status == 201) {
+            setMsg(true);
+            setSuccess(true);
+            setUser(defaultUser);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setMsg(true);
+          setSuccess(false);
+        });
+    }
   }
 
   return (
@@ -63,7 +124,7 @@ function UserEdit() {
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
             <div className="">
               <h1 className="fs-3 mb-1">Edit User</h1>
-              <p className="mb-0">Update staff account information</p>
+              <p className="mb-0">update user </p>
             </div>
             <div>
               <Link to="/user" className="btn btn-primary">
@@ -77,7 +138,25 @@ function UserEdit() {
         <div className="col-12">
           <div className="card">
             <div className="card-body p-4">
-              <form id="editUserForm">
+              {msg && (
+                <div
+                  className={`alert alert-${success ? "success" : "danger"} alert-dismissible fade show mb-3`}
+                  role="alert"
+                >
+                  {success
+                    ? "Data updated successfully"
+                    : "something went wrong! please try again after some time."}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => setMsg(false)}
+                  ></button>
+                </div>
+              )}
+
+              <form id="addUserForm">
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="userName" className="form-label">
@@ -88,9 +167,10 @@ function UserEdit() {
                       className="form-control"
                       id="userName"
                       placeholder="Enter full name"
-                      required
                       value={user.name}
-                      onChange={(e) => setUser({ ...user, name: e.target.value })}
+                      onChange={(e) =>
+                        setUser({ ...user, name: e.target.value })
+                      }
                     />
                     <small className="text-danger">{error.name}</small>
                   </div>
@@ -103,9 +183,10 @@ function UserEdit() {
                       className="form-control"
                       id="userEmail"
                       placeholder="Enter email address"
-                      required
                       value={user.email}
-                      onChange={(e) => setUser({ ...user, email: e.target.value })}
+                      onChange={(e) =>
+                        setUser({ ...user, email: e.target.value })
+                      }
                     />
                     <small className="text-danger">{error.email}</small>
                   </div>
@@ -120,9 +201,10 @@ function UserEdit() {
                       className="form-control"
                       id="userPhone"
                       placeholder="e.g. +880 1XXX-XXXXXX"
-                      required
                       value={user.phone}
-                      onChange={(e) => setUser({ ...user, phone: e.target.value })}
+                      onChange={(e) =>
+                        setUser({ ...user, phone: e.target.value })
+                      }
                     />
                     <small className="text-danger">{error.phone}</small>
                   </div>
@@ -133,18 +215,27 @@ function UserEdit() {
                     <select
                       className="form-select"
                       id="userRole"
-                      required
                       value={user.role}
-                      onChange={(e) => setUser({ ...user, role: e.target.value as User["role"] })}
+                      onChange={(e) =>
+                        setUser({
+                          ...user,
+                          role: Number(e.target.value),
+                        })
+                      }
                     >
-                      <option value="">Select role</option>
-                      <option value="admin">Admin</option>
-                      <option value="manager">Manager</option>
-                      <option value="cashier">Cashier</option>
+                      <option value={0} disabled>
+                        Select role
+                      </option>
+                      {roles.map((item) => (
+                        <option key={item.id} value={item.name}>
+                          {item.name}
+                        </option>
+                      ))}
                     </select>
                     <small className="text-danger">{error.role}</small>
                   </div>
                 </div>
+                
                 <div className="mb-3">
                   <label htmlFor="userAvatar" className="form-label">
                     Profile Photo
@@ -155,10 +246,12 @@ function UserEdit() {
                     id="userAvatar"
                     accept="image/*"
                     onChange={(e) =>
-                      setUser({ ...user, avatar: e.target.files?.[0]?.name ?? user.avatar })
+                      setUser({
+                        ...user,
+                        avatar: e.target.files?.[0]?.name ?? "",
+                      })
                     }
                   />
-                  <small className="text-secondary">Leave empty to keep the current photo.</small>
                 </div>
                 <div className="mb-3">
                   <label className="form-label d-block">Status</label>
@@ -186,17 +279,24 @@ function UserEdit() {
                       checked={user.status === "inactive"}
                       onChange={() => setUser({ ...user, status: "inactive" })}
                     />
-                    <label className="form-check-label" htmlFor="statusInactive">
+                    <label
+                      className="form-check-label"
+                      htmlFor="statusInactive"
+                    >
                       Inactive
                     </label>
                   </div>
                 </div>
                 <div className="d-flex gap-2">
-                  <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                    Update User
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={handleSubmit}
+                  >
+                    update User
                   </button>
                   <button type="reset" className="btn btn-secondary">
-                    Cancel
+                    Clear
                   </button>
                 </div>
               </form>
