@@ -97,12 +97,12 @@ function UserEdit() {
       newErrors.role == "" 
      
     ) {
-      console.log(user);
+      // console.log(user);
 
       api
-        .post("user-update",user )
+        .put("user-update",user )
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           if (res.status == 200 || res.status == 201) {
             setMsg(true);
             setSuccess(true);
@@ -227,7 +227,7 @@ function UserEdit() {
                         Select role
                       </option>
                       {roles.map((item) => (
-                        <option key={item.id} value={item.name}>
+                        <option key={item.id} value={item.id}>
                           {item.name}
                         </option>
                       ))}

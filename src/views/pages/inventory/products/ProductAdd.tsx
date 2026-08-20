@@ -1,9 +1,15 @@
 import { Link } from "react-router";
 import { type Product, defaultProduct } from "../../../../interfaces/Product";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { Category } from "../../../../interfaces/Category";
+import { api } from "../../../../Config";
+import type { Brand } from "../../../../interfaces/Brand";
 
 function ProductAdd() {
   const [product, setProduct] = useState<Product>(defaultProduct);
+  const [Category, setCategory]= useState<Category[]>([]);
+  const [Brand, setBrand] = useState<Brand[]>([]);
+
   const [error, setError] = useState({
     image: "",
     name: "",
@@ -11,9 +17,38 @@ function ProductAdd() {
     category: "",
     brand: "",
     price: "",
-    unit: "",
     quantity: "",
   });
+
+  function getCategories(){
+    api
+    .get("categories")
+    .then((res)=>{
+      console.log(res.data);
+      setCategory(res.data);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  }
+
+
+    function getBrands(){
+    api
+    .get("brands")
+    .then((res)=>{
+      console.log(res.data);
+      setBrand(res.data);
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+  }
+
+  useEffect(()=>{
+    getCategories();
+    getBrands();
+  })
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -27,7 +62,7 @@ function ProductAdd() {
       newErrors.name = "";
     }
 
-    if (product.code === "") {
+    if (product.sku === "") {
       newErrors.code = "Code is required";
     } else {
       newErrors.code = "";
@@ -49,12 +84,6 @@ function ProductAdd() {
       newErrors.price = "Price is required";
     } else {
       newErrors.price = "";
-    }
-
-    if (product.unit === "") {
-      newErrors.unit = "Unit is required";
-    } else {
-      newErrors.unit = "";
     }
 
     if (product.quantity === 0) {
@@ -121,8 +150,8 @@ function ProductAdd() {
                       id="productSKU"
                       placeholder="Enter SKU"
                       required
-                      value={product.code}
-                      onChange={(e) => setProduct({ ...product, code: e.target.value })}
+                      value={product.sku}
+                      onChange={(e) => setProduct({ ...product, sku: e.target.value })}
                     />
                     <small className="text-danger">{error.code}</small>
                   </div>
@@ -145,7 +174,7 @@ function ProductAdd() {
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="productStock" className="form-label">
-                      Stock Quantity
+                     Quantity
                     </label>
                     <input
                       type="number"
@@ -171,10 +200,12 @@ function ProductAdd() {
                       value={product.category}
                       onChange={(e) => setProduct({ ...product, category: e.target.value })}
                     >
-                      <option value="">Select category</option>
-                      <option value="electronics">Electronics</option>
-                      <option value="clothing">Clothing</option>
-                      <option value="food">Food</option>
+                      <option value={0} disabled>Select category</option>
+                      {Category.map((item)=>(
+
+                      <option key={item.id} value={item.id}>{item.name}</option>
+                      ))}
+                      
                     </select>
                     <small className="text-danger">{error.category}</small>
                   </div>
@@ -182,37 +213,28 @@ function ProductAdd() {
                     <label htmlFor="productBrand" className="form-label">
                       Brand
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
+
+                    <select
+                      className="form-select"
                       id="productBrand"
-                      placeholder="Enter brand name"
                       required
                       value={product.brand}
                       onChange={(e) => setProduct({ ...product, brand: e.target.value })}
-                    />
+                    >
+                      <option value={0} disabled>Select Brnds</option>
+                      {Brand.map((item)=>(
+
+                      <option key={item.id} value={item.id}>{item.name}</option>
+                      ))}
+                      
+                    </select>
+
+
+                    
                     <small className="text-danger">{error.brand}</small>
                   </div>
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="productUnit" className="form-label">
-                    Unit
-                  </label>
-                  <select
-                    className="form-select"
-                    id="productUnit"
-                    required
-                    value={product.unit}
-                    onChange={(e) => setProduct({ ...product, unit: e.target.value })}
-                  >
-                    <option value="">Select unit</option>
-                    <option value="pcs">pcs</option>
-                    <option value="kg">kg</option>
-                    <option value="litre">litre</option>
-                    <option value="box">box</option>
-                  </select>
-                  <small className="text-danger">{error.unit}</small>
-                </div>
+                
                 <div className="mb-3">
                   <label htmlFor="productImage" className="form-label">
                     Product Image
@@ -229,19 +251,7 @@ function ProductAdd() {
                   />
                   <small className="text-danger">{error.image}</small>
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="productDescription" className="form-label">
-                    Description
-                  </label>
-                  <textarea
-                    className="form-control"
-                    id="productDescription"
-                    rows={4}
-                    placeholder="Enter product description"
-                    value={product.description}
-                    onChange={(e) => setProduct({ ...product, description: e.target.value })}
-                  ></textarea>
-                </div>
+                
                 <div className="d-flex gap-2">
                   <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                     Add Product

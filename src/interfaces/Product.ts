@@ -1,25 +1,25 @@
 export type Product = {
   id: number;
   name: string;
-  code: string;
-  category: string;
-  brand: string;
+  sku: string;
+  category_id: number;
+  category?:string,
+  brand_id: number;
+  brand?:string,
   price: number;
-  unit: string;
   quantity: number;
   image: string;
-  description: string;
+  is_active: boolean;
 };
 
 export const defaultProduct: Product = {
   id: 0,
   name: "",
-  code: "",
-  category: "",
-  brand: "",
+  sku: "",
+  category_id: 0,
+  brand_id: 0,
   price: 0,
-  unit: "",
   quantity: 0,
   image: "",
-  description: "",
+  is_active: true,
 };
