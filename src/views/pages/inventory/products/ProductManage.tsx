@@ -1,9 +1,30 @@
 import { Link } from "react-router";
+import type { Product } from "../../../../interfaces/Product";
+import { useEffect, useState } from "react";
+import { api, basePath } from "../../../../Config";
 
 
 
 
 function ProductManage() {
+
+const [products, setProduct] = useState<Product[]>([]);
+
+ const getProducts = ()=>{
+     api
+     .get("product")
+     .then((res)=>{
+      console.log(res.data);
+      setProduct(res.data);
+     })
+     .catch((err)=>{
+      console.log(err);
+     })
+ }
+
+ useEffect(()=>{
+  getProducts();
+ }, []);
   return (
     <>
       <div className="row">
@@ -48,45 +69,49 @@ function ProductManage() {
                 <table className="table mb-0 text-nowrap table-hover">
                   <thead className="table-light border-light">
                     <tr>
-                      <th>Image</th>
-
+                      <th>ID</th>
+                      <th>Name</th>
                       <th>Code</th>
                       <th>Category</th>
                       <th>Brand</th>
                       <th>Price</th>
                       <th>Quantity</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
+                   {products.map((item)=>(
                     <tr className="align-middle ">
+                      <td>{item.id}</td>
                       <td>
-                        <a href="">
-                          <img
-                            src={""} alt="Product" 
-                            className="avatar avatar-md rounded"
-                          />
-                          <span className="ms-3">Gaming Joy Stick</span>
-                        </a>
+                          {(item.image_path != null && item.image_path!="")&& (
+                            <img src={basePath + item.image_path} width={50} height={50} alt={item.name} loading="lazy" />
+                        )}
+                           <br />
+                        <span className="ms-3">{item.name}</span>
+                        
                       </td>
-
-                      <td>PRD001</td>
-                      <td>Electronics</td>
-                      <td>Brand Name</td>
-                      <td>$99.99</td>
-                      <td>150</td>
+                      <td>{item.sku}</td>
+                      <td>{item.category}</td>
+                      <td>{item.brand}</td>
+                      <td>{item.price}</td>
+                      <td>{item.quantity}</td>
+                      <td>{item.is_active}</td>
                       <td className="">
-                        <a href="#" className="">
+                        <a href="#" className="btn btn-outline-success">
                           <i className="bi bi-eye-fill"></i>
                         </a>
-                        <a href="#" className="">
+                        <a href="#" className="btn btn-outline-primary">
                           <i className="ti ti-edit "></i>
                         </a>
-                        <a href="#" className="link-danger">
+                        <a href="#" className="btn btn-outline-danger">
                           <i className="ti ti-trash ms-2"></i>
                         </a>
                       </td>
                     </tr>
+
+                   ))}
                     
                   </tbody>
                   <tfoot className="">

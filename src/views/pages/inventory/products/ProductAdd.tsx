@@ -7,99 +7,68 @@ import type { Brand } from "../../../../interfaces/Brand";
 
 function ProductAdd() {
   const [product, setProduct] = useState<Product>(defaultProduct);
-  const [Category, setCategory]= useState<Category[]>([]);
+  const [Category, setCategory] = useState<Category[]>([]);
   const [Brand, setBrand] = useState<Brand[]>([]);
 
-  const [error, setError] = useState({
-    image: "",
-    name: "",
-    code: "",
-    category: "",
-    brand: "",
-    price: "",
-    quantity: "",
-  });
+  const [msg, setMsg] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  function getCategories(){
+  function getCategories() {
     api
-    .get("categories")
-    .then((res)=>{
-      console.log(res.data);
-      setCategory(res.data);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
+      .get("categories")
+      .then((res) => {
+        console.log(res.data);
+        setCategory(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-
-    function getBrands(){
+  function getBrands() {
     api
-    .get("brands")
-    .then((res)=>{
-      console.log(res.data);
-      setBrand(res.data);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
+      .get("brands")
+      .then((res) => {
+        console.log(res.data);
+        setBrand(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getCategories();
     getBrands();
-  })
+  }, []);
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    let newErrors: any = {};
+  function handleSubmit() {
+    let data = new FormData();
+    data.append("name", product.name);
+    data.append("sku", product.sku);
+    data.append("category_id", product.category_id.toString());
+    data.append("brand_id", product.brand_id.toString());
+    data.append("price", product.price.toString());
+    data.append("quantity", product.quantity.toString());
+    data.append("is_active", product.is_active.toString());
+    if (product.image) data.append("image", product.image);
 
-    if (product.name === "") {
-      newErrors.name = "Name is required";
-    } else if (product.name.length > 100 || product.name.length < 3) {
-      newErrors.name = "Name more than 3 and not more than 100";
-    } else {
-      newErrors.name = "";
-    }
-
-    if (product.sku === "") {
-      newErrors.code = "Code is required";
-    } else {
-      newErrors.code = "";
-    }
-
-    if (product.category === "") {
-      newErrors.category = "Category is required";
-    } else {
-      newErrors.category = "";
-    }
-
-    if (product.brand === "") {
-      newErrors.brand = "Brand is required";
-    } else {
-      newErrors.brand = "";
-    }
-
-    if (product.price === 0) {
-      newErrors.price = "Price is required";
-    } else {
-      newErrors.price = "";
-    }
-
-    if (product.quantity === 0) {
-      newErrors.quantity = "Stock quantity is required";
-    } else {
-      newErrors.quantity = "";
-    }
-
-    if (product.image === "") {
-      newErrors.image = "Product image is required";
-    } else {
-      newErrors.image = "";
-    }
-
-    setError(newErrors);
-    console.log(product);
+    api
+      .post("product-create", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setSuccess(true);
+        setMsg(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setSuccess(false);
+        setMsg(true);
+      });
   }
 
   return (
@@ -123,7 +92,31 @@ function ProductAdd() {
         <div className="col-12">
           <div className="card">
             <div className="card-body p-4">
-              <form id="addProductForm">
+              {msg && (
+                <div
+                  className={`alert alert-${success ? "success" : "danger"} alert-dismissible fade show mb-3`}
+                  role="alert"
+                >
+                  {success
+                    ? "Data saved successfully"
+                    : "something went wrong! please try again after some time."}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => setMsg(false)}
+                  ></button>
+                </div>
+              )}
+
+              <form
+                id="addProductForm"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+              >
                 <div className="row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="productName" className="form-label">
@@ -136,9 +129,10 @@ function ProductAdd() {
                       placeholder="Enter product name"
                       required
                       value={product.name}
-                      onChange={(e) => setProduct({ ...product, name: e.target.value })}
+                      onChange={(e) =>
+                        setProduct({ ...product, name: e.target.value })
+                      }
                     />
-                    <small className="text-danger">{error.name}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="productSKU" className="form-label">
@@ -151,9 +145,10 @@ function ProductAdd() {
                       placeholder="Enter SKU"
                       required
                       value={product.sku}
-                      onChange={(e) => setProduct({ ...product, sku: e.target.value })}
+                      onChange={(e) =>
+                        setProduct({ ...product, sku: e.target.value })
+                      }
                     />
-                    <small className="text-danger">{error.code}</small>
                   </div>
                 </div>
                 <div className="row">
@@ -168,13 +163,17 @@ function ProductAdd() {
                       placeholder=""
                       required
                       value={product.price}
-                      onChange={(e) => setProduct({ ...product, price: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setProduct({
+                          ...product,
+                          price: Number(e.target.value),
+                        })
+                      }
                     />
-                    <small className="text-danger">{error.price}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="productStock" className="form-label">
-                     Quantity
+                      Quantity
                     </label>
                     <input
                       type="number"
@@ -183,9 +182,13 @@ function ProductAdd() {
                       placeholder="0"
                       required
                       value={product.quantity}
-                      onChange={(e) => setProduct({ ...product, quantity: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setProduct({
+                          ...product,
+                          quantity: Number(e.target.value),
+                        })
+                      }
                     />
-                    <small className="text-danger">{error.quantity}</small>
                   </div>
                 </div>
                 <div className="row">
@@ -197,17 +200,23 @@ function ProductAdd() {
                       className="form-select"
                       id="productCategory"
                       required
-                      value={product.category}
-                      onChange={(e) => setProduct({ ...product, category: e.target.value })}
+                      value={product.category_id}
+                      onChange={(e) =>
+                        setProduct({
+                          ...product,
+                          category_id: Number(e.target.value),
+                        })
+                      }
                     >
-                      <option value={0} disabled>Select category</option>
-                      {Category.map((item)=>(
-
-                      <option key={item.id} value={item.id}>{item.name}</option>
+                      <option value={0} disabled>
+                        Select category
+                      </option>
+                      {Category.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
                       ))}
-                      
                     </select>
-                    <small className="text-danger">{error.category}</small>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="productBrand" className="form-label">
@@ -218,23 +227,26 @@ function ProductAdd() {
                       className="form-select"
                       id="productBrand"
                       required
-                      value={product.brand}
-                      onChange={(e) => setProduct({ ...product, brand: e.target.value })}
+                      value={product.brand_id}
+                      onChange={(e) =>
+                        setProduct({
+                          ...product,
+                          brand_id: Number(e.target.value),
+                        })
+                      }
                     >
-                      <option value={0} disabled>Select Brnds</option>
-                      {Brand.map((item)=>(
-
-                      <option key={item.id} value={item.id}>{item.name}</option>
+                      <option value={0} disabled>
+                        Select Brnds
+                      </option>
+                      {Brand.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
                       ))}
-                      
                     </select>
-
-
-                    
-                    <small className="text-danger">{error.brand}</small>
                   </div>
                 </div>
-                
+
                 <div className="mb-3">
                   <label htmlFor="productImage" className="form-label">
                     Product Image
@@ -246,14 +258,69 @@ function ProductAdd() {
                     accept="image/*"
                     required
                     onChange={(e) =>
-                      setProduct({ ...product, image: e.target.files?.[0]?.name ?? "" })
+                      setProduct({
+                        ...product,
+                        image: e.target.files?.[0] ?? null,
+                      })
                     }
                   />
-                  <small className="text-danger">{error.image}</small>
                 </div>
-                
+
+                <div className="mb-3">
+                  <label className="form-label d-block">Status</label>
+
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="productStatus"
+                      id="statusActive"
+                      value="active"
+                      checked={product.is_active === true}
+                      onChange={() =>
+                        setProduct({
+                          ...product,
+                          is_active: true,
+                        })
+                      }
+                    />
+
+                    <label className="form-check-label" htmlFor="statusActive">
+                      Active
+                    </label>
+                  </div>
+
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="productStatus"
+                      id="statusInactive"
+                      value="inactive"
+                      checked={product.is_active === false}
+                      onChange={() =>
+                        setProduct({
+                          ...product,
+                          is_active: false,
+                        })
+                      }
+                    />
+
+                    <label
+                      className="form-check-label"
+                      htmlFor="statusInactive"
+                    >
+                      Inactive
+                    </label>
+                  </div>
+                </div>
+
                 <div className="d-flex gap-2">
-                  <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={handleSubmit}
+                  >
                     Add Product
                   </button>
                   <button type="reset" className="btn btn-secondary">

@@ -5,10 +5,11 @@ export type Product = {
   category_id: number;
   category?:string,
   brand_id: number;
-  brand?:string,
+  brand?:string;
   price: number;
   quantity: number;
-  image: string;
+  image?: File | null,
+  image_path?:string;
   is_active: boolean;
 };
 
@@ -20,6 +21,5 @@ export const defaultProduct: Product = {
   brand_id: 0,
   price: 0,
   quantity: 0,
-  image: "",
   is_active: true,
 };
