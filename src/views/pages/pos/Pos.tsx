@@ -24,6 +24,8 @@ function PosManage() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
   const navigate = useNavigate();
 
   const getProducts = () => {
@@ -146,28 +148,53 @@ function PosManage() {
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
 
-  function handleCheckout() {
+  async function handleCheckout() {
     if (cart.length === 0) {
-    return;
-  }
+      return;
+    }
 
-  navigate("/pos-recept", {
-    state: {
-      items: cart.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        qty: item.qty,
-      })),
-      subtotal,
-      tax,
-      total,
-      invoiceNo: `INV-${Date.now()}`,
-      date: new Date().toLocaleString(),
-    },
-  });
+    setCheckingOut(true);
+    setCheckoutError("");
 
-  clearCart();
+    try {
+      const res = await api.post("sales", {
+        items: cart.map((item) => ({
+          id: item.id,
+          price: item.price,
+          qty: item.qty,
+        })),
+        subtotal,
+        tax,
+        total,
+      });
+
+      const sale = res.data;
+
+      navigate("/pos-recept", {
+        state: {
+          items: cart.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            qty: item.qty,
+          })),
+          subtotal,
+          tax,
+          total,
+          invoiceNo: sale.invoice_no,
+          date: new Date().toLocaleString(),
+        },
+      });
+
+      clearCart();
+      getProducts(); 
+    } catch (err: any) {
+      setCheckoutError(
+        err?.response?.data?.message || "Checkout failed. Please try again."
+      );
+    } finally {
+      setCheckingOut(false);
+    }
   }
 
   return (
@@ -320,12 +347,15 @@ function PosManage() {
                   <span>Total</span>
                   <span>৳{total.toFixed(2)}</span>
                 </div>
+                {checkoutError && (
+                  <p className="text-danger small mt-2 mb-0">{checkoutError}</p>
+                )}
                 <button
                   className="btn btn-primary w-100 mt-2"
-                  disabled={cart.length === 0}
+                  disabled={cart.length === 0 || checkingOut}
                   onClick={handleCheckout}
                 >
-                  Checkout
+                  {checkingOut ? "Processing..." : "Checkout"}
                 </button>
               </div>
             </div>
