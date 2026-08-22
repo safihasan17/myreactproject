@@ -54,7 +54,7 @@ function UserDetails() {
               <h4 className="mb-1">{user.name}</h4>
               <p className="text-secondary mb-3">{user.email}</p>
               <span className="badge bg-primary-subtle text-primary me-1">
-                {user.role}
+                {user.role_id}
               </span>
               <span className="badge bg-success-subtle text-success">
                 {user.status}
@@ -86,7 +86,7 @@ function UserDetails() {
                 </div>
                 <div className="col-md-6">
                   <small className="text-secondary d-block">Role</small>
-                  <p className="mb-0 text-capitalize">{user.role}</p>
+                  <p className="mb-0 text-capitalize">{user.role_id}</p>
                 </div>
                 <div className="col-md-6">
                   <small className="text-secondary d-block">Status</small>

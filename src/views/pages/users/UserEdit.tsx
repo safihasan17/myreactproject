@@ -77,7 +77,7 @@ function UserEdit() {
       newErrors.phone = "";
     }
 
-    if (user.role == 0) {
+    if (user.role_id == 0) {
       newErrors.role = "Role is required";
     } else {
       newErrors.role = 0;
@@ -215,11 +215,11 @@ function UserEdit() {
                     <select
                       className="form-select"
                       id="userRole"
-                      value={user.role}
+                      value={user.role_id}
                       onChange={(e) =>
                         setUser({
                           ...user,
-                          role: Number(e.target.value),
+                          role_id: Number(e.target.value),
                         })
                       }
                     >

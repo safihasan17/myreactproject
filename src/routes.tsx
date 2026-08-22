@@ -36,6 +36,7 @@ import PaymentManage from "./views/pages/inventory/payment/PaymentManage.tsx";
 import PaymentAdd from "./views/pages/inventory/payment/PaymentAdd.tsx";
 import UserDetails from "./views/pages/users/UserDetails.tsx";
 import UserEdit from "./views/pages/users/UserEdit.tsx";
+import PosReceipt from "./views/pages/pos/PosRecipt.tsx";
 
 export const routes = createBrowserRouter([
   {
@@ -120,7 +121,7 @@ export const routes = createBrowserRouter([
       
       {path:"/add-stock-manage",element:<StockMgtAdd/>},
 
-      {path:"/pos",element:<PosManage/>},
+      
 
       {path:"/branches",element:<BranchManage/>},
 
@@ -169,5 +170,10 @@ export const routes = createBrowserRouter([
   {
     path: "/login",
     element: <Login/>
-  }
+  },
+
+  {path:"/pos",element:<PosManage/>},
+
+  {path:"/pos-recept",element:<PosReceipt/>},
+  
   ]);

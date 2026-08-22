@@ -94,7 +94,7 @@ function UserManage() {
                   <td>{item.phone}</td>
                   <td>
                     <span className="badge bg-primary-subtle text-primary">
-                      {item.role}
+                      {item.role_id}
                     </span>
                   </td>
                   
@@ -104,13 +104,13 @@ function UserManage() {
                     </span>
                   </td>
                   <td>
-                    <Link to={`/user-details/${item.id}`} className="">
+                    <Link to={`/user-details/${item.id}`} className="btn btn-outline-success">
                       <i className="bi bi-eye-fill"></i>
                     </Link>
-                    <Link to={`/edit-user/${item.id}`} className="">
+                    <Link to={`/edit-user/${item.id}`} className="btn btn-outline-primary">
                       <i className="ti ti-edit "></i>
                     </Link>
-                    <a href="#" className="link-danger">
+                    <a href="#" className="btn btn-outline-danger">
                       <i className="ti ti-trash ms-2"></i>
                     </a>
                   </td>
